@@ -148,8 +148,9 @@ const getInfoStats = async (req, res) => {
     await pg
       .query(query)
       .then((data) => {
-        let mutants = data.rows.filter((item) => (item.type = "mutant")).length;
-        let humans = data.rows.filter((item) => (item.type = "human")).length;
+        console.log(data.rows);
+        let mutants = data.rows.filter((item) => item.type === "mutant").length;
+        let humans = data.rows.filter((item) => item.type === "human").length;
         let ratio = mutants / humans;
         res.status(status.success).send({
           count_mutant_dna: mutants,
