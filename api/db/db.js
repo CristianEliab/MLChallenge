@@ -6,7 +6,7 @@ const pool = new Pool({
   connectionString: connectionString,
   ssl: {
     connectionString: connectionString,
-    rejectUnauthorized: true,
+    rejectUnauthorized: false,
   },
 });
 
