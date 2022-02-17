@@ -27,7 +27,7 @@ const checkMutant = async (req, res) => {
     let occurrences = nDna ? nDna : N_OCCURRENCES;
     let result = isMutant({ dna, occurrences });
     //insert result
-    let query = "INSERT INTO stats_registers (type) VALUES ($1, $2)";
+    let query = "INSERT INTO stats_registers (type) VALUES ($1)";
     pg.query(query, [result ? "mutant" : "human"]);
     return res.status(result ? status.success : status.forbidden).send({
       status: true,
