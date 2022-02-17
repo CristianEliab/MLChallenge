@@ -1,8 +1,13 @@
 const { Pool } = require("pg");
-let connectionString = "postgresql://postgresql:nMtq9wabHDLf48sd@34.134.36.176/ml";
+let connectionString =
+  "postgresql://postgres:nMtq9wabHDLf48sd@34.134.36.176:5432/ml";
 
 const pool = new Pool({
   connectionString: connectionString,
+  ssl: {
+    connectionString: connectionString,
+    rejectUnauthorized: true,
+  },
 });
 
 /**
