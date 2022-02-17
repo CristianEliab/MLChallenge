@@ -8,7 +8,7 @@ app.use(express.json({ limit: "50mb" }));
 app.use("/", apiRoutes);
 
 // start node server
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 80;
 app.listen(port, () => {
   console.log(`Server is listening on http://localhost:${port}`);
 });
