@@ -16,7 +16,7 @@ const N_OCCURRENCES = 4;
 const checkMutant = async (req, res) => {
   try {
     const { dna, nDna } = req.body;
-    //nDna es una variable para  parametrizar el numero de repeticiones o occurencias que se quieren buscar
+    //nDna es una variable para  parametrizar el numero de repeticiones o ocurrencias que se quieren buscar
     if (isEmpty(dna)) {
       return res.status(status.bad).send({
         status: false,
@@ -24,7 +24,7 @@ const checkMutant = async (req, res) => {
       });
     }
     //Se realiza la validacion de la persona
-    let occurrences = nDna ? nDna : N_OCCURRENCES;
+    let occurrences = nDna ? parseInt(nDna) : N_OCCURRENCES;
     let result = isMutant({ dna, occurrences });
     //insert result
     let query = "INSERT INTO stats_registers (type) VALUES ($1)";
@@ -46,7 +46,7 @@ const checkMutant = async (req, res) => {
 
 /**
  * Solucion aplicada al problema.
- * Se realizara la separacion por filas, columnas y diagonales. Posteriormente, por cada row obtenido se
+ * Se realizará la separacion por filas, columnas y diagonales. Posteriormente, por cada row obtenido se
  * realizara la validacion y conteo de ocurrencias de las letras. Para encontrar las ocurrencias se utiliza el metodo de
  * split que separa los valores cuyas repeticiones sean de 4 valores, esto por cada uno de los registros obtenidos
  * @param {*} param0
@@ -102,15 +102,15 @@ const getMax = (a, b) => {
 /**
  * Proceso de busqueda:
  * 1. Realizo la busqueda de los caracteres por registro.
- * Ejemplo en la cadena ADFGAS, los caracteres serian ADFGS.La idea es identificar loscarasteres sin repeticiones
+ * Ejemplo en la cadena ADFGAS, los caracteres serian ADFGS.La idea es identificar los carasteres sin repeticiones
  * 2. Por cada uno de los caracteres realizo la busqueda de la ocurrencias
  * Ejemplo caracter A --> busco y filtro por ocurrencias de la cadena AAAA
  * 3. Al realizar un split, se divide el resultado en un arreglo de separaciones con ocurrencias encontradas, dado que el split realizara
- * una divicion de mas porcada ocurrencia elimino una de sus repeticiones.
- * Ejemplo:  la cadena AAAABDF, al splitear quedaria un arreglo> ['', 'BDF'] de este el resultado  es que encontro una ocurrencia pero realizo
- * dos separeciones. Por ende, elimino una de ellas.
- * tambien se podria realizando un  busqueda en el arreglor resultando donde el item sea vacio o ''.
- * sin embargo, asuno que el numero de ocurrencias es el total de las separaciones - 1.
+ * una divición de mas por cada ocurrencia elimino una de sus repeticiones.
+ * Ejemplo:  la cadena AAAABDF, al splitear quedaria un arreglo'> ['', 'BDF'].El resultado es una ocurrencia pero se realizo
+ * dos separaciones. Por ende, elimino una de ellas.
+ * Tambien se podria haber realizando una busqueda en el arreglor resultante donde el item sea vacio o ''.
+ * Sin embargo, asumo que el número de ocurrencias es el total de las separaciones - 1.
  * @param {*} param0
  * @returns
  */
@@ -126,7 +126,7 @@ const checknumberOcurrences = ({ row, occurrences }) => {
 };
 
 /**
- * Metodo que permite identificar los diferentes caracteres/cadenas de string en un arreglo filtrando por solo una aparicion
+ * Método que permite identificar los diferentes carácteres/cadenas de string en un arreglo filtrando por solo una aparicion
  * @param {*} value
  * @param {*} index
  * @param {*} self
