@@ -1,5 +1,7 @@
 const moment = require("moment-timezone");
 
+const pg = require("../db/db");
+
 const { isEmpty } = require("../helpers/validations");
 const { status } = require("../helpers/status");
 
@@ -24,6 +26,9 @@ const checkMutant = async (req, res) => {
     //Se realiza la validacion de la persona
     let occurrences = nDna ? nDna : N_OCCURRENCES;
     let result = isMutant({ dna, occurrences });
+    //insert result
+    let query = "INSERT INTO stats_registers (type) VALUES ($1, $2)";
+    pg.query(query, [result ? "mutant" : "human"]);
     return res.status(result ? status.success : status.forbidden).send({
       status: true,
       isMutant: result,
@@ -139,6 +144,25 @@ const onlyUnique = (value, index, self) => {
  */
 const getInfoStats = async (req, res) => {
   try {
+    let query = "SELECT * FROM stats_registers ORDER BY id";
+    await pg
+      .query(query)
+      .then((data) => {
+        let mutants = data.rows.filter((item) => (item.type = "mutant")).length;
+        let humans = data.rows.filter((item) => (item.type = "human")).length;
+        let ratio = mutants / humans;
+        res.status(status.success).send({
+          count_mutant_dna: mutants,
+          count_human_dna: humans,
+          ratio: ratio,
+        });
+      })
+      .catch((error) => {
+        res.status(status.error).send({
+          error: error,
+          status: false,
+        });
+      });
   } catch (error) {
     res.status(status.error).send({
       error: error,
