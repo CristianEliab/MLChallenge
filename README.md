@@ -17,7 +17,7 @@ npm start
 El API se encuentrá ubicado en Google Cloud, en una instancia VM
 
 Nivel 2: 
-Ruta: 34.122.51.53/mutant
+Ruta: http://34.132.218.28/mutant
 Metodo: POST
 Body: 
 {
@@ -32,5 +32,5 @@ Body:
 }
 
 Nivel 3:
-Ruta: 34.122.51.53/stats
+Ruta: http://34.132.218.28/stats
 Metodo: GET
